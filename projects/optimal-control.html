@@ -4,29 +4,100 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Tanay Raghunandan Srinivasa — Project:Optimal Control</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
   <style>
-    body { 
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; 
-        max-width: 900px; 
-        margin: 3rem auto; 
-        padding: 0 1rem; 
-        line-height: 1.6; 
-        background-color: #c8ebeb; 
+    /* Custom styles for this project page */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
-    header { 
-        border-bottom: 1px solid #000; 
-        padding-bottom: 1rem; 
-        margin-bottom: 1rem; 
+    
+    header h1 {
+      font-size: 1.8rem;
+      line-height: 1.3;
+      margin: 0;
     }
-    h1 { margin: 0 }
-    .pub { margin-bottom: .6rem }
-    .links a { margin-right: .8rem }
-</style>
+    
+    .back-home-btn {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      text-decoration: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    
+    .back-home-btn:hover {
+      background: var(--text-color);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+      
+      header h1 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+      }
+      
+      /* Make section headers slightly smaller on mobile to maintain hierarchy */
+      section h2 {
+        font-size: 1.3rem;
+      }
+      
+      .back-home-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      header {
+        gap: 0.6rem;
+      }
+      
+      header h1 {
+        font-size: 1.4rem;
+        line-height: 1.1;
+      }
+      
+      section h2 {
+        font-size: 1.1rem;
+      }
+      
+      .back-home-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Optimal Control using Physics Inspired Machine Learning for Aerospace Applications</h1>
-  </header>
+
+  <div class="container">
+    <header>
+      <a href="../index.html" class="back-home-btn">←</a>
+      <h1>Optimal Control using Physics Inspired Machine Learning for Aerospace Applications</h1>
+    </header>
 
   <section>
     <h2>Background</h2>
@@ -74,6 +145,26 @@
     <a href="optimal-control.pdf">Link to Poster</a>
   </section>
   
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <script>
+    // Theme management for project page
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    // Apply saved theme on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+    });
+  </script>
 </body>
 </html>
 
