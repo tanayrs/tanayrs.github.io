@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const markdownToHtml = (text) => {
     let html = text;
+    // Links - process first to avoid conflicts with other formatting
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
     // Bold
     html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     // Italics
