@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tanay Raghunandan Srinivasa — Project:LARS-UAV</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+  <style>
+    header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      line-height: 1.4;
+      margin: 0;
+      flex: 1;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    .back-home-btn {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      text-decoration: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .back-home-btn:hover {
+      background: var(--text-color);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+      header h1 { font-size: 1.5rem; line-height: 1.3; width: 100%; }
+      section h2 { font-size: 1.3rem; }
+      .back-home-btn { width: 36px; height: 36px; font-size: 1.1rem; }
+    }
+    @media (max-width: 480px) {
+      header { gap: 0.6rem; }
+      header h1 { font-size: 1.3rem; line-height: 1.2; width: 100%; }
+      section h2 { font-size: 1.1rem; }
+      .back-home-btn { width: 32px; height: 32px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="../index.html" class="back-home-btn">←</a>
+      <h1>LARS-UAV: Low-Altitude Remote Sensing UAV Framework</h1>
+    </header>
+
+    <section>
+      <h2>Introduction</h2>
+      <p>Agriculture is the backbone of India, with 50% of the nation depending on it for their livelihood.<sup>[1]</sup></p>
+      <p>India produces 25% of the world’s crop, however as per the Food and Agriculture Organization, 40% of the global crop production is lost every year due to pests and diseases.<sup>[2]</sup></p>
+      <p><strong>Current Solution:</strong> Manual inspection by trained professionals, however the progress is slow.</p>
+      <p><strong>Problem Statement:</strong> How can we remotely and autonomously monitor crop health, yield, diseases, and pests at various growth stages?</p>
+      <p><strong>What Makes us Different:</strong></p>
+      <ul>
+        <li>Autonomous crop monitoring framework powered by low-altitude multispectral UAV imaging and on-device inference.</li>
+        <li>Detection of stress zones, early disease symptoms, crop health, and deployment of ground robots for detailed inspection.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Motivation</h2>
+      <p align="center">
+        <img width="696" height="296" src="https://github.com/user-attachments/assets/f4088461-42d8-403c-a822-22eaa5f85e35" alt="NDVI maps"/>
+      </p>
+      <p><em>NDVI maps calculated for rice plot 6... (July 2020)</em></p>
+      <ul>
+        <li>Satellite data has much lower resolution than UAS drones.</li>
+        <li>UAS allows data collection at flexible timings.</li>
+      </ul>
+      <p><strong>Limitations:</strong> Imaging resolution is too low to monitor each plant.</p>
+    </section>
+
+    <section>
+      <h2>How to monitor crop health?</h2>
+      <h3>Our Paper Title</h3>
+      <p>Advancing Real-Time Crop Disease Detection on Edge Computing Devices using Lightweight Convolutional Neural Networks</p>
+      <h3>Gap</h3>
+      <p>Early rice disease detection is crucial for food security, but deploying deep learning models in resource-constrained environments is challenging.</p>
+      <h3>Our Approach</h3>
+      <p>We developed a lightweight MobileNet-V4 CNN trained on 16,225 images covering 13 rice diseases. Converted to TensorFlow Lite for deployment on Raspberry Pi 5, Nvidia P100 GPUs, and CPUs. Enables fast, accurate detection directly on drones or field devices.</p>
+      <h3>Our Results</h3>
+      <p align="center">
+        <img width="1812" height="681" src="https://github.com/user-attachments/assets/a0ff0660-9a50-4355-a834-1d360baf7d46" alt="results"/>
+      </p>
+      <p>MobileNet-V4 achieved 97.84% test accuracy, faster inference, and better energy efficiency than ResNet-34 and other MobileNet variants. Balanced accuracy, speed, and energy use make it optimal for deployment in constrained agricultural environments.</p>
+    </section>
+
+    <section>
+      <h2>What about the groundbot?</h2>
+      <p align="center">
+        <img width="1408" height="769" src="https://github.com/user-attachments/assets/ff40d9b7-80ba-491a-8e08-96dc5befac27" alt="Deployment Flowchart"/>
+      </p>
+      <p align="center">
+        <img width="1955" height="676" src="https://github.com/user-attachments/assets/c54e2d43-6401-447c-b71d-3fb3c8fe16d5" alt="ROS Environment"/>
+      </p>
+      <p>Figures show the deployment flowchart and ROS Environment overview.</p>
+    </section>
+
+    <section>
+      <h2>Publication</h2>
+      <p>Nanda, T.R., Shukla, A., Srinivasa, T.R., Bhargava, J., Chauhan, S. (2025). <strong>Advancing Real-Time Crop Disease Detection...</strong> <a href="https://doi.org/10.1007/978-3-032-00071-233">DOI link</a></p>
+    </section>
+
+    <section>
+      <h2>GitHub</h2>
+      <p><a href="https://github.com/lars-uav">https://github.com/lars-uav</a></p>
+    </section>
+
+    <section>
+      <h2>Citations</h2>
+      <ol>
+        <li><a href="https://www.fao.org/india/fao-in-india/india-at-a-glance/en/">FAO India at a glance</a></li>
+        <li><a href="https://www.fao.org/plant-production-protection/about/en#:~:text=Every%20year%2C%20up%20to%2040,at%20least%20USD%2070%20billion">FAO Plant Production and Protection</a></li>
+      </ol>
+    </section>
+  </div>
+
+  <script src="../assets/script.js"></script>
+  <script>
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+    });
+  </script>
+</body>
+</html>
