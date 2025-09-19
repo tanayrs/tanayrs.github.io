@@ -89,7 +89,8 @@
       <p align="center">
         <img src="https://github.com/user-attachments/assets/f4088461-42d8-403c-a822-22eaa5f85e35" alt="NDVI maps"/>
       </p>
-      <p><em>NDVI maps calculated for rice plot 6... (July 2020)</em></p>
+      <p><em>NDVI maps calculated for rice plot 6 (Quinta do Canal) using data from Sentinel-2A (left) and UAS (right) imagery the spatial resolution of, respectively, 10 m and 0.074 m. The data were obtained during the rice reproductive phase, respectively, on the 8th and 9th of July, 2020.</em></p>
+      <p><em>Advantages of drone-based imaging to satellites:</em></p>
       <ul>
         <li>Satellite data has much lower resolution than UAS drones.</li>
         <li>UAS allows data collection at flexible timings.</li>
@@ -104,12 +105,27 @@
       <h3>Gap</h3>
       <p>Early rice disease detection is crucial for food security, but deploying deep learning models in resource-constrained environments is challenging.</p>
       <h3>Our Approach</h3>
-      <p>We developed a lightweight MobileNet-V4 CNN trained on 16,225 images covering 13 rice diseases. Converted to TensorFlow Lite for deployment on Raspberry Pi 5, Nvidia P100 GPUs, and CPUs. Enables fast, accurate detection directly on drones or field devices.</p>
+      <p>Early detection of rice diseases is vital for food security, but conventional deep learning models are too resource-intensive for real-time use on edge devices. We developed a lightweight convolutional neural network based on MobileNet-V4, trained on a dataset of 16,225 images covering 13 rice diseases. The model was optimized and converted to TensorFlow Lite (TFLite) format for efficient deployment on resource-constrained hardware like Raspberry Pi 5, Nvidia P100 GPUs, and CPUs. This enables fast, accurate disease detection directly on drones or field devices, bridging the gap between high-accuracy models and real-time field deployment, offering a practical solution for early rice disease detection in resource-limited environments.</p>
       <h3>Our Results</h3>
       <p align="center">
         <img src="https://github.com/user-attachments/assets/a0ff0660-9a50-4355-a834-1d360baf7d46" alt="results"/>
       </p>
-      <p>MobileNet-V4 achieved 97.84% test accuracy, faster inference, and better energy efficiency than ResNet-34 and other MobileNet variants. Balanced accuracy, speed, and energy use make it optimal for deployment in constrained agricultural environments.</p>
+      <p>While comparing baseline models, without any optimization, ResNet-34 performs marginally better than MobileNet-V4, and has significant gains over MobileNet-V2 and MobileNet-V3 as seen in Table 3.</p>
+      <p>As seen in Table 4, MobileNet-V4 achieves a test accuracy of 97.84 % when optimized, demonstrating the eﬃcacy of these techniques in improving generalization over its baseline configuration and ResNet-34. Despite this high accuracy, the confusion matrix in Fig.3 reveals systematic misclassifications in visually similar disease categories, such as bacterial leaf blight vs. bacterial leaf streak and white stem borer vs. yellow stem borer. Additionally, minority classes, like bacterial panicle blight, exhibit slightly lower recall, suggesting the eﬀect of class imbalance. The model also misclassifies mild cases of brown spot and downy mildew as Normal, indicating potential overlap in visual features. This can be addressed by enhancing fine-grained disease diﬀerentiation through attention-based feature extraction.</p>
+      <p>As shown in Table 5, TFLite lacks CUDA GPU optimizations for MobileNet-V4 and ResNet34, resulting in inference times that remain largely unchanged. In contrast, MobileNet-V2 experiences a significant performance boost. The observations made from Table 5 are as follows.</p>
+      <ul>
+        <li>MobileNet Models: Consistently demonstrated faster inference times across all platforms, particularly on the Raspberry Pi 5, due to their lightweight design.</li>
+        <li>MobileNet-V4: Achieved the highest accuracy and the lowest inference times.</li>
+        <li>TFLite Eﬃciency: TFLite models generally outperformed PyTorch models in inference speed, highlighting the advantages of the format for edge deployment.</li>
+      </ul>
+    
+    <p>The experiments reveal critical trade-oﬀs between accuracy and speed. MobileNet-V4 emerged as a strong candidate for edge deployment, balancing speed and accuracy eﬀectively. It is also suited for scenarios, where computational resources are less constrained as it can provide even faster inference times. TFLite’s performance gains emphasize on the importance of model optimization for resource-limited platforms like the Raspberry Pi 5.</p>
+
+    <p>The power eﬃciency analysis revealed that MobileNet-V4 demonstrated superior energy eﬃciency compared to other tested models, which can be seen in Table 6. MobileNet-V2 consumed approximately 30% less energy per inference than MobileNet-V4 and 90% less than ResNet34. However, this improved energy eﬃciency came at the cost of accuracy, as shown in Table 3. MobileNet-V4 presented a more balanced option, using significantly less energy than ResNet34 (66% reduction in energy per inference) while having a higher accuracy and F1-Score as mentioned in Table 3. When combined with the faster inference times reported in Table 5, MobileNet-V4 emerged as the optimal model for deployment in resource-constrained agricultural environments, where battery life and thermal management were critical considerations. The power eﬃciency analysis revealed that MobileNet-V4 demonstrated superior energy eﬃciency compared to other tested models, which can be seen in Table 6.</p>
+
+    <h3>Paper Citation</h3>
+    <p>Nanda, T.R., Shukla, A., Srinivasa, T.R., Bhargava, J., Chauhan, S. (2025). Advancing Real-Time Crop Disease Detection on Edge Computing Devices Using Lightweight Convolutional Neural Networks. In: Arai, K. (eds) Intelligent Systems and Applications. IntelliSys 2025. Lecture Notes in Networks and Systems, vol 1567. Springer, Cham. <a href="https://doi.org/10.1007/978-3-032-00071-233">https://doi.org/10.1007/978-3-032-00071-233</p>
+
     </section>
 
     <section>
@@ -121,11 +137,6 @@
         <img src="https://github.com/user-attachments/assets/c54e2d43-6401-447c-b71d-3fb3c8fe16d5" alt="ROS Environment"/>
       </p>
       <p>Figures show the deployment flowchart and ROS Environment overview.</p>
-    </section>
-
-    <section>
-      <h2>Publication</h2>
-      <p>Nanda, T.R., Shukla, A., Srinivasa, T.R., Bhargava, J., Chauhan, S. (2025). Advancing Real-Time Crop Disease Detection on Edge Computing Devices Using Lightweight Convolutional Neural Networks. In: Arai, K. (eds) Intelligent Systems and Applications. IntelliSys 2025. Lecture Notes in Networks and Systems, vol 1567. Springer, Cham. <a href="https://doi.org/10.1007/978-3-032-00071-233">https://doi.org/10.1007/978-3-032-00071-233</a>.</p>
     </section>
 
     <section>
