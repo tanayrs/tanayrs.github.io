@@ -15,7 +15,7 @@
 
 <project>
 **Low Altitude Remote Sensing using Unmanned Aerial Vehicles for Crop Health Monitoring** <br>
-<a href="https://github.com/lars-uav">Read More</a>
+<a href="projects/lars-uav.md">Read More</a>
 </project>
 
 <project>
