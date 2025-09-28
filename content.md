@@ -39,8 +39,8 @@ Tanay Raghunandan Srinivasa is a B.Tech student majoring in Robotics and Autonom
 </project>
 
 <project>
-**LQR Based Trajectory Tracking Segway Control** <br> 
-<a href="https://github.com/tanayrs/SegwayTrajectoryTracking">Read More</a>
+**LQR Based Trajectory Path FollowingControl** <br> 
+<a href="https://github.com/tanayrs/SegwayPathFollower">Read More</a>
 </project>
 
 <project>
