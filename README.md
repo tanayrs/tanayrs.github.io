@@ -105,3 +105,56 @@ loadContent('volunteering.md', 'volunteering-content');
 ```
 
 And that's it! The script will automatically fetch and render the content in the new section. If your new section requires special formatting (like the project cards), you may need to add a new content type to the `loadContent` function in `script.js`.
+
+---
+
+## 3. Adding Project Detail Pages
+
+When you add a project to `content/projects.md`, you may want to create a detailed page about it. The website uses a modular system where you just create a markdown file with your content.
+
+### Step 1: Create the Project Detail Markdown File
+
+Create a new markdown file in the `content/project-details/` directory. The filename should be descriptive and URL-friendly (lowercase, use hyphens instead of spaces).
+
+For example: `content/project-details/my-awesome-project.md`
+
+**Important:** The first line of your markdown file should be a level 1 heading (`# Title`) which will become the page title.
+
+```markdown
+# My Awesome Project Title
+
+## Section 1
+
+Your content here...
+
+## Section 2
+
+More content...
+
+### Subsection
+
+You can use all standard markdown formatting:
+- Lists
+- **Bold text**
+- _Italic text_
+- [Links](https://example.com)
+- Images: ![Alt text](image-url)
+```
+
+### Step 2: Link to Your Project Page
+
+In `content/projects.md`, add a new project entry with a link to the template page, passing your markdown filename (without the `.md` extension) as the `id` parameter:
+
+```markdown
+<project>
+**My Awesome Project** <br>
+<a href="projects/project-template.html?id=my-awesome-project">Read More</a>
+</project>
+```
+
+That's it! The system will automatically load and render your markdown file with the correct styling.
+
+### Examples
+
+See `content/project-details/optimal-control.md` and `content/project-details/lars-uav.md` for examples of project detail pages.
+
