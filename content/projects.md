@@ -1,6 +1,6 @@
 <project>
 **Optimal Control using Physics Inspired Machine Learning for Aerospace Applications** <br> 
-<a href="projects/optimal-control.html">Read More</a>
+<a href="projects/project-template.html?id=optimal-control">Read More</a>
 </project>
 
 <project>
@@ -15,7 +15,7 @@
 
 <project>
 **Low Altitude Remote Sensing using Unmanned Aerial Vehicles for Crop Health Monitoring** <br>
-<a href="projects/lars-uav.html">Read More</a>
+<a href="projects/project-template.html?id=lars-uav">Read More</a>
 </project>
 
 <project>

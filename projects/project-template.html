@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title id="page-title">Tanay Raghunandan Srinivasa — Project</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+  <style>
+    header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      line-height: 1.4;
+      margin: 0;
+      flex: 1;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 1rem auto;
+    }
+    .back-home-btn {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: var(--accent-color);
+      color: var(--bg-color);
+      text-decoration: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      flex-shrink: 0;
+    }
+    .back-home-btn:hover {
+      background: var(--text-color);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    @media (max-width: 768px) {
+      header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+      header h1 { font-size: 1.5rem; line-height: 1.3; width: 100%; }
+      section h2 { font-size: 1.3rem; }
+      .back-home-btn { width: 36px; height: 36px; font-size: 1.1rem; }
+    }
+    @media (max-width: 480px) {
+      header { gap: 0.6rem; }
+      header h1 { font-size: 1.3rem; line-height: 1.2; width: 100%; }
+      section h2 { font-size: 1.1rem; }
+      .back-home-btn { width: 32px; height: 32px; font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <a href="../index.html" class="back-home-btn">←</a>
+      <h1 id="project-title">Loading...</h1>
+    </header>
+    <div id="project-content">
+      <p>Loading project details...</p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    // Apply saved theme on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+
+      // Get project ID from URL parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const projectId = urlParams.get('id');
+
+      if (!projectId) {
+        document.getElementById('project-content').innerHTML = '<p>Error: No project specified.</p>';
+        return;
+      }
+
+      // Load project markdown file
+      fetch(`../content/project-details/${projectId}.md`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Project file not found: ${projectId}.md`);
+          }
+          return response.text();
+        })
+        .then(markdown => {
+          // Extract title from first line (assuming it's # Title)
+          const lines = markdown.split('\n');
+          let title = 'Project Details';
+          let content = markdown;
+
+          if (lines[0].startsWith('# ')) {
+            title = lines[0].substring(2).trim();
+            content = lines.slice(1).join('\n');
+          }
+
+          // Update page title and header
+          document.getElementById('page-title').textContent = `Tanay Raghunandan Srinivasa — ${title}`;
+          document.getElementById('project-title').textContent = title;
+
+          // Parse markdown to HTML
+          const html = marked.parse(content);
+          document.getElementById('project-content').innerHTML = html;
+        })
+        .catch(error => {
+          console.error('Error loading project:', error);
+          document.getElementById('project-content').innerHTML = `<p>Error loading project details: ${error.message}</p>`;
+        });
+    });
+  </script>
+</body>
+</html>
