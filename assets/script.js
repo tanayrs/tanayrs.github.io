@@ -99,8 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
   loadContent('bio.md', 'bio-content');
   loadContent('experience.md', 'experience-content');
   loadContent('publications.md', 'publications-content');
+  loadContent('preprints.md', 'preprints-content');
   loadContent('projects.md', 'projects-content', true);
-  loadContent('preprints.md', 'preprints-content',true)
   loadContent('awards.md', 'awards-content');
 
 
