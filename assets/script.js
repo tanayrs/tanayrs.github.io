@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadContent('experience.md', 'experience-content');
   loadContent('publications.md', 'publications-content');
   loadContent('projects.md', 'projects-content', true);
+  loadContent('preprints.md', 'preprints-content')
   loadContent('awards.md', 'awards-content');
 
 
