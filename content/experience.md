@@ -1,4 +1,8 @@
 <exp>
+**Project Trainee |** U R Rao Satellite Center, ISRO (Jan 2026 - Present)
+</exp>
+
+<exp>
 **Research Intern |** U R Rao Satellite Center, ISRO (May 2025 - Jul 2025)
 </exp>
 
