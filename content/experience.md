@@ -3,6 +3,10 @@
 </exp>
 
 <exp>
+**Student Tutor, Mechatronics |** Plaksha University (Aug 2025 - Dec 2025)
+</exp>
+
+<exp>
 **Research Intern |** U R Rao Satellite Center, ISRO (May 2025 - Jul 2025)
 </exp>
 
