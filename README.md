@@ -1,160 +1,207 @@
-# How to Update Your Portfolio Website
+# tanayrs.github.io — Portfolio Site
 
-This guide explains how to update the content on your portfolio website and how to add new sections if needed.
+Personal academic portfolio for [Tanay Raghunandan Srinivasa](https://tanayrs.com).
+Built with vanilla HTML, Tailwind CSS (Play CDN), and vanilla JavaScript. No build step, no npm, no framework required.
 
-## 1. Updating Existing Content
+---
 
-All the content for your website is stored in Markdown (`.md`) files within the `content/` directory. Each file corresponds to a section on your website.
+## File Structure
 
-To update a section, simply edit the corresponding file.
+```
+index.html                    ← Main page
+CNAME                         ← Custom domain (tanayrs.com)
+assets/
+  style.css                   ← Minimal custom CSS (toggle, hamburger, project-body markdown)
+  script.js                   ← Homepage logic
+  project.js                  ← Project detail page logic
+  marked.min.js               ← Local Markdown parser (do NOT replace with CDN)
+content/
+  bio.md                      ← Biography (plain Markdown)
+  experience.md               ← Experience entries (<exp> blocks)
+  publications.md             ← Publications (<pub> blocks)
+  preprints.md                ← Preprints (<pub> blocks, hidden by default)
+  projects.md                 ← Project cards (<project> blocks)
+  awards.md                   ← Awards (<pub> blocks)
+  project-details/
+    <slug>.md                 ← One file per project detail page
+projects/
+  project-template.html       ← Universal project detail template (?id=<slug>)
+docs/
+  cv.pdf                      ← CV file linked in the header
+```
 
--   `content/bio.md`: Your biography.
--   `content/experience.md`: Your work and research experience.
--   `content/publications.md`: Your published papers.
--   `content/projects.md`: Your projects.
--   `content/awards.md`: Your awards and recognitions.
+---
 
-### Formatting Your Content
+## Updating Content
 
-You can use standard Markdown for formatting, and the site also uses special HTML-like tags to structure the content.
+All site content lives in the `content/` directory as Markdown files.
+Edit the relevant file and push — no build step needed.
 
-#### Bold and Italics
+### Bio
 
--   For **bold** text, wrap it in double asterisks: `**your text**`
--   For *italic* text, wrap it in single underscores or asterisks: `_your text_` or `*your text*`
+Edit `content/bio.md` — plain Markdown, no special tags needed.
 
-#### Custom Section Tags
+```markdown
+Tanay Raghunandan Srinivasa is a B.Tech graduate majoring in **Robotics and Autonomous Systems**...
+```
 
-To ensure correct styling, wrap entries in the `experience`, `publications`, `projects`, and `awards` sections in their specific tags.
+### Experience
 
-**Experience (`<exp>`)**
-
-Each entry in `content/experience.md` should be wrapped in `<exp>` tags.
+Edit `content/experience.md`. Wrap each entry in `<exp>` tags, newest first.
 
 ```markdown
 <exp>
-**Research Intern |** U R Rao Satellite Center, ISRO (May 2025 - Jul 2025)
+**Job Title** | Organisation (Month Year – Month Year)
+
+One-line description of the role.
 </exp>
 ```
 
-**Publications (`<pub>`)**
+### Publications
 
-Each entry in `content/publications.md` and `content/awards.md` should be wrapped in `<pub>` tags.
+Edit `content/publications.md`. Wrap each entry in `<pub>` tags.
 
 ```markdown
 <pub>
-**Author(s)** (Year). Title of Publication. _Journal or Conference Name_.
+Author, A., **Srinivasa, T.R.** (2025). "Title." *Venue*. [DOI link text](https://doi.org/10.xxx/xxx)
 </pub>
 ```
 
-**Projects (`<project>`)**
+> **Important:** Always write DOIs as `[text](url)` Markdown links — never as raw text.
+> Raw URLs containing underscores will be misread by the Markdown parser.
 
-Each entry in `content/projects.md` should be wrapped in `<project>` tags. The content will be automatically placed into a card.
+### Preprints
+
+Edit `content/preprints.md` — same `<pub>` format as publications.
+The Preprints section is hidden by default behind a "+ Show Preprints" toggle on the main page.
+
+### Projects (cards on main page)
+
+Edit `content/projects.md`. Wrap each project in `<project>` tags.
+The first 6 cards are shown; a "Show More" button reveals the rest.
 
 ```markdown
 <project>
-**Project Title** <br>
-<a href="link-to-project">Read More</a>
+**Project Title**
+
+One or two sentence description of the project.
+
+[View Details](projects/project-template.html?id=your-slug) · [GitHub](https://github.com/...)
 </project>
 ```
 
+Available link types per card (use whichever apply):
+- `[View Details](projects/project-template.html?id=slug)` — links to the detail page
+- `[GitHub](url)` — links to the repo
+- `[Paper](url)` / `[arXiv](url)` / `[Poster](url)`
+
+### Awards
+
+Edit `content/awards.md` — same `<pub>` format.
+
+```markdown
+<pub>
+**Award Name** | Year
+Brief description of the recognition.
+</pub>
+```
+
+### CV
+
+Replace `docs/cv.pdf` with your updated CV. The filename must stay `cv.pdf`.
+
 ---
 
-## 2. Adding a New Section
+## Adding a New Project Detail Page
 
-Let's say you want to add a new "Volunteering" section to your website. Here are the steps:
+Each project can have a dedicated detail page powered by a single Markdown file.
 
-### Step 1: Create the Markdown File
+### Step 1 — Create the Markdown file
 
-Create a new file in the `content/` directory. For our example, this would be `content/volunteering.md`. Add your content to this file, using the formatting rules above.
+Create `content/project-details/<slug>.md` where `<slug>` is a short, lowercase, hyphenated identifier.
 
-### Step 2: Add the Section to `index.html`
+**The first line must be a level-1 heading** — it becomes the page title and browser tab title.
 
-Open `index.html` and add a new `<section>` block for your new content. It's important to give the section and the content `div` unique `id`s.
+```markdown
+# Full Project Title
+
+## Overview
+
+Describe the motivation and goals...
+
+## Approach
+
+Explain the technical approach...
+
+## Results
+
+- Key finding 1
+- Key finding 2
+
+![Figure caption](https://github.com/user-attachments/assets/...)
+
+[Paper](https://doi.org/10.xxx/xxx) · [GitHub](https://github.com/...)
+```
+
+### Step 2 — Add a card in projects.md
+
+In `content/projects.md`, add or update the `<project>` block so that "View Details" points to your new slug:
+
+```markdown
+<project>
+**My Project**
+
+One-line description.
+
+[View Details](projects/project-template.html?id=my-project)
+</project>
+```
+
+The detail page is then live at:
+`https://tanayrs.com/projects/project-template.html?id=my-project`
+
+---
+
+## Adding a New Section
+
+To add a section like "Teaching" or "Talks":
+
+**1. Create `content/teaching.md`** with `<exp>` or `<pub>` blocks, or plain Markdown.
+
+**2. Add the section to `index.html`** before `</main>`:
 
 ```html
-<!-- ... existing sections ... -->
-
-<section id="awards-section">
-  <h2>Awards</h2>
-  <div id="awards-content"></div>
+<section id="teaching-section">
+  <h2 class="font-heading text-3xl mt-8 mb-4 pb-2
+             border-b border-edge dark:border-edge-dark">Teaching</h2>
+  <div id="teaching-content"></div>
 </section>
-
-<!-- Add your new section here -->
-<section id="volunteering-section">
-  <h2>Volunteering</h2>
-  <div id="volunteering-content"></div>
-</section>
-
-</main>
 ```
 
-### Step 3: Load the Content in `assets/script.js`
+**3. Add a `loadContent` call in `assets/script.js`** at the bottom of the load block:
 
-Open `assets/script.js` and add a new `loadContent()` call to fetch the content from your new markdown file and place it into the `div` you just created in `index.html`.
-
-```javascript
-// ... existing loadContent calls ...
-loadContent('projects.md', 'projects-content', true);
-loadContent('awards.md', 'awards-content');
-
-// Add the new call here
-loadContent('volunteering.md', 'volunteering-content');
-
-// ... rest of the script ...
+```js
+loadContent('teaching.md', 'teaching-content');
 ```
-
-And that's it! The script will automatically fetch and render the content in the new section. If your new section requires special formatting (like the project cards), you may need to add a new content type to the `loadContent` function in `script.js`.
 
 ---
 
-## 3. Adding Project Detail Pages
+## Local Development
 
-When you add a project to `content/projects.md`, you may want to create a detailed page about it. The website uses a modular system where you just create a markdown file with your content.
+No dev server is strictly required — the site is static HTML with no build step.
+Because content is loaded via `fetch()`, a local server prevents CORS errors:
 
-### Step 1: Create the Project Detail Markdown File
-
-Create a new markdown file in the `content/project-details/` directory. The filename should be descriptive and URL-friendly (lowercase, use hyphens instead of spaces).
-
-For example: `content/project-details/my-awesome-project.md`
-
-**Important:** The first line of your markdown file should be a level 1 heading (`# Title`) which will become the page title.
-
-```markdown
-# My Awesome Project Title
-
-## Section 1
-
-Your content here...
-
-## Section 2
-
-More content...
-
-### Subsection
-
-You can use all standard markdown formatting:
-- Lists
-- **Bold text**
-- _Italic text_
-- [Links](https://example.com)
-- Images: ![Alt text](image-url)
+```bash
+python3 -m http.server 8080
 ```
 
-### Step 2: Link to Your Project Page
+Then open `http://localhost:8080`.
 
-In `content/projects.md`, add a new project entry with a link to the template page, passing your markdown filename (without the `.md` extension) as the `id` parameter:
+---
 
-```markdown
-<project>
-**My Awesome Project** <br>
-<a href="projects/project-template.html?id=my-awesome-project">Read More</a>
-</project>
-```
+## Deployment
 
-That's it! The system will automatically load and render your markdown file with the correct styling.
+The site deploys automatically via GitHub Pages on every push to `main`.
+`CNAME` points GitHub Pages to `tanayrs.com`.
 
-### Examples
-
-See `content/project-details/optimal-control.md` and `content/project-details/lars-uav.md` for examples of project detail pages.
-
+To update the site: edit a content file, commit, and push. Done.

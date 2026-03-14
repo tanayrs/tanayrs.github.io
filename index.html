@@ -2,64 +2,153 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tanay Raghunandan Srinivasa — Portfolio</title>
+
+  <!-- Anti-flash: apply theme before first paint -->
+  <script>
+    const t = localStorage.getItem('theme');
+    if (t === 'dark') document.documentElement.classList.add('dark');
+  </script>
+
+  <!-- Tailwind Play CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Tailwind config (runs after CDN so `tailwind` global exists) -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            page:   { DEFAULT: '#d5e5f7', dark: '#2c3e50' },
+            ink:    { DEFAULT: '#2c3e50', dark: '#ecf0f1' },
+            accent: { DEFAULT: '#3498db' },
+            edge:   { DEFAULT: '#d0dce7', dark: '#3b5266' },
+          },
+          fontFamily: {
+            heading: ['Merriweather', 'serif'],
+            body:    ['Inter', 'sans-serif'],
+          },
+          maxWidth: { content: '800px' },
+        },
+      },
+    }
+  </script>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS overrides -->
   <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
-  <header>
-    <div class="name">Tanay Raghunandan Srinivasa</div>
-    <button class="menu-toggle">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
+<body class="font-body bg-page dark:bg-page-dark text-ink dark:text-ink-dark
+             transition-colors duration-300 leading-relaxed m-0 p-0">
+
+  <!-- Fixed Header -->
+  <header class="fixed top-0 left-0 right-0 z-50
+                 bg-page dark:bg-page-dark
+                 border-b border-edge dark:border-edge-dark
+                 px-8 py-4
+                 flex justify-between items-center
+                 transition-colors duration-300">
+
+    <div class="font-heading font-bold text-2xl">
+      Tanay Raghunandan Srinivasa
+    </div>
+
+    <!-- Hamburger (mobile only) -->
+    <button class="menu-toggle md:hidden bg-transparent border-none cursor-pointer z-[1001]"
+            aria-label="Toggle navigation">
+      <span class="bar bg-ink dark:bg-ink-dark"></span>
+      <span class="bar bg-ink dark:bg-ink-dark"></span>
+      <span class="bar bg-ink dark:bg-ink-dark"></span>
     </button>
-    <nav>
-      <a href="docs/cv.pdf" target="_blank">CV</a>
-      <a href="https://github.com/tanayrs" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/tanayrs/" target="_blank">LinkedIn</a>
-      <a href="https://scholar.google.com/citations?user=2vlSKpIAAAAJ&hl=en" target="_blank">Google Scholar</a>
-      <a href="mailto:tanay.srinivasa@plaksha.edu.in" target="_blank">Email</a>
-      <div class="theme-switch-wrapper">
-        <label class="theme-switch" for="theme-switch">
-          <input type="checkbox" id="theme-switch" />
-          <div class="slider round"></div>
+
+    <!-- Nav -->
+    <nav class="flex items-center gap-6
+                max-md:fixed max-md:top-0 max-md:right-0 max-md:bottom-0
+                max-md:w-[250px] max-md:flex-col max-md:items-start
+                max-md:pt-24 max-md:px-8
+                max-md:bg-page dark:max-md:bg-page-dark
+                max-md:shadow-[-2px_0_5px_rgba(0,0,0,0.1)]">
+
+      <a href="docs/cv.pdf" target="_blank"
+         class="text-accent font-medium hover:underline transition-colors duration-200">CV</a>
+      <a href="https://github.com/tanayrs" target="_blank"
+         class="text-accent font-medium hover:underline transition-colors duration-200">GitHub</a>
+      <a href="https://www.linkedin.com/in/tanayrs/" target="_blank"
+         class="text-accent font-medium hover:underline transition-colors duration-200">LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=2vlSKpIAAAAJ&hl=en" target="_blank"
+         class="text-accent font-medium hover:underline transition-colors duration-200">Google Scholar</a>
+      <a href="mailto:tanay.srinivasa@plaksha.edu.in"
+         class="text-accent font-medium hover:underline transition-colors duration-200">Email</a>
+
+      <!-- Theme Toggle -->
+      <div class="theme-toggle-wrap">
+        <span class="toggle-icon">☀</span>
+        <label class="toggle-label" for="theme-switch">
+          <input type="checkbox" id="theme-switch" class="hidden" />
+          <div class="slider"></div>
         </label>
+        <span class="toggle-icon">☾</span>
       </div>
     </nav>
   </header>
 
-  <main class="container">
-    <section id="bio-section">
-      <h2>Bio</h2>
+  <!-- Main Content -->
+  <main class="max-w-content mx-auto px-8 pt-20 pb-8">
+
+    <section id="bio-section" class="mt-8">
+      <h2 class="font-heading text-3xl mt-8 mb-4 pb-2
+                 border-b border-edge dark:border-edge-dark">Bio</h2>
       <div id="bio-content"></div>
     </section>
+
     <section id="experience-section">
-      <h2>Experience</h2>
+      <h2 class="font-heading text-3xl mt-8 mb-4 pb-2
+                 border-b border-edge dark:border-edge-dark">Experience</h2>
       <div id="experience-content"></div>
     </section>
+
     <section id="publications-section">
-      <h2>Publications</h2>
+      <h2 class="font-heading text-3xl mt-8 mb-4 pb-2
+                 border-b border-edge dark:border-edge-dark">Publications</h2>
       <div id="publications-content"></div>
     </section>
-    <!-- <section id="preprints-section">
-      <h2>Pre-Prints</h2>
+
+    <!-- Preprints toggle button: sits between Publications and Projects -->
+    <button id="preprints-toggle-btn"
+            onclick="togglePreprints()"
+            class="text-accent text-sm font-medium mt-2 mb-2
+                   bg-transparent border-none cursor-pointer hover:underline">
+      + Show Preprints
+    </button>
+
+    <!-- Preprints: hidden by default -->
+    <section id="preprints-section" class="hidden">
+      <h2 class="font-heading text-3xl mt-8 mb-4 pb-2
+                 border-b border-edge dark:border-edge-dark">Preprints</h2>
       <div id="preprints-content"></div>
-    </section> -->
+    </section>
+
     <section id="projects-section">
-      <h2>Projects</h2>
+      <h2 class="font-heading text-3xl mt-8 mb-4 pb-2
+                 border-b border-edge dark:border-edge-dark">Projects</h2>
       <div id="projects-content"></div>
     </section>
+
     <section id="awards-section">
-      <h2>Awards</h2>
+      <h2 class="font-heading text-3xl mt-8 mb-4 pb-2
+                 border-b border-edge dark:border-edge-dark">Awards</h2>
       <div id="awards-content"></div>
     </section>
+
   </main>
 
+  <script src="assets/marked.min.js"></script>
   <script src="assets/script.js"></script>
 </body>
 </html>
-
