@@ -34,6 +34,11 @@
 </project>
 
 <project>
+**Ishara: American Sign Language Fingerspelling Recognition** <br>
+<a href="https://github.com/tanmayrainanda/ishara">Read More</a>
+</project>
+
+<project>
 **Bi-Steer Cycle** <br>
 <a href="https://github.com/tanayrs/BiSteerCycle">Read More</a>
 </project>
