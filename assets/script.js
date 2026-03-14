@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  marked.use({ breaks: true, gfm: true });
 
   // ── Hamburger menu ──────────────────────────────────────────
   const menuToggle = document.querySelector('.menu-toggle');
@@ -7,14 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     nav.classList.toggle('is-active');
     menuToggle.classList.toggle('is-active');
   });
-  // Close nav on outside click
+  // Close nav on outside click or nav-link click
   document.addEventListener('click', (e) => {
     if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
       nav.classList.remove('is-active');
       menuToggle.classList.remove('is-active');
     }
   });
-  // Close nav when a nav link is clicked
   nav.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
       nav.classList.remove('is-active');
@@ -22,12 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── marked configuration ─────────────────────────────────────
-  marked.use({ breaks: true, gfm: true });
-
-  const INITIAL_VISIBLE = 6; // single source of truth for show/hide threshold
-
-  const entryClass = 'mb-4 pb-4 border-b border-edge dark:border-edge-dark last:border-b-0';
+  // ── Content loading ──────────────────────────────────────────
+  const INITIAL_VISIBLE = 6;
 
   function loadContent(file, containerId, options = {}) {
     fetch('content/' + file)
@@ -44,47 +40,25 @@ document.addEventListener('DOMContentLoaded', () => {
           while ((match = regex.exec(text)) !== null) {
             const hidden = i >= INITIAL_VISIBLE ? 'hidden' : '';
             const inner = marked.parse(match[1].trim());
-            cards += `
-              <div class="project-card ${hidden}
-                bg-page dark:bg-page-dark
-                border border-edge dark:border-edge-dark
-                rounded-lg p-6 cursor-pointer
-                transition-all duration-300
-                hover:-translate-y-1.5 hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
-                data-index="${i}">
-                ${inner}
-              </div>`;
+            cards += `<div class="project-card ${hidden}" data-index="${i}">${inner}</div>`;
             i++;
           }
-          let html = `
-            <div class="grid gap-6"
-                 style="grid-template-columns: repeat(auto-fit, minmax(275px, 1fr))">
-              ${cards}
-            </div>`;
+          let html = `<div class="projects-grid">${cards}</div>`;
           if (i > INITIAL_VISIBLE) {
-            html += `
-              <button class="show-more-btn
-                block mx-auto mt-8 px-6 py-3
-                bg-accent text-white font-body font-medium
-                border-none rounded-md cursor-pointer
-                transition-all duration-300
-                hover:bg-ink dark:hover:bg-ink-dark hover:-translate-y-0.5"
-                onclick="toggleProjects()">
-                Show More
-              </button>`;
+            html += `<button class="show-more-btn" onclick="toggleProjects()">Show More</button>`;
           }
           container.innerHTML = html;
 
         } else {
-          // ── Pub / Exp / plain markdown ────────────────────
+          // ── Pub / Exp entries ─────────────────────────────
           let processed = text;
           processed = processed.replace(
             /<pub>([\s\S]*?)<\/pub>/g,
-            (_, c) => `<div class="${entryClass}">${marked.parse(c.trim())}</div>`
+            (_, c) => `<div class="pub">${marked.parse(c.trim())}</div>`
           );
           processed = processed.replace(
             /<exp>([\s\S]*?)<\/exp>/g,
-            (_, c) => `<div class="${entryClass}">${marked.parse(c.trim())}</div>`
+            (_, c) => `<div class="exp">${marked.parse(c.trim())}</div>`
           );
           // Plain markdown fallback (bio, etc.)
           container.innerHTML = (processed === text)
@@ -94,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .catch(() => {
         const container = document.getElementById(containerId);
-        if (container) container.innerHTML = `<p class="text-red-500">Error loading ${file}.</p>`;
+        if (container) container.innerHTML = `<p style="color: #e74c3c;">Error loading ${file}.</p>`;
       });
   }
 
@@ -131,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     themeSwitch.checked = isDark;
   };
   themeSwitch.addEventListener('change', () => applyTheme(themeSwitch.checked));
-  // Sync checkbox with theme already applied by anti-flash snippet in <head>
+  // Sync checkbox with theme already set by anti-flash script in <head>
   themeSwitch.checked = document.documentElement.classList.contains('dark');
 
   // ── Load all sections ─────────────────────────────────────────

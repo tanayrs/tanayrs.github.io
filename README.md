@@ -1,7 +1,7 @@
 # tanayrs.github.io — Portfolio Site
 
 Personal academic portfolio for [Tanay Raghunandan Srinivasa](https://tanayrs.com).
-Built with vanilla HTML, Tailwind CSS (Play CDN), and vanilla JavaScript. No build step, no npm, no framework required.
+Built with vanilla HTML, vanilla CSS, and vanilla JavaScript. No build step, no npm, no framework required.
 
 ---
 
@@ -11,10 +11,10 @@ Built with vanilla HTML, Tailwind CSS (Play CDN), and vanilla JavaScript. No bui
 index.html                    ← Main page
 CNAME                         ← Custom domain (tanayrs.com)
 assets/
-  style.css                   ← Minimal custom CSS (toggle, hamburger, project-body markdown)
+  style.css                   ← All CSS (vanilla — no Tailwind)
   script.js                   ← Homepage logic
   project.js                  ← Project detail page logic
-  marked.min.js               ← Local Markdown parser (do NOT replace with CDN)
+  marked.min.js               ← Local Markdown parser
 content/
   bio.md                      ← Biography (plain Markdown)
   experience.md               ← Experience entries (<exp> blocks)
@@ -172,8 +172,7 @@ To add a section like "Teaching" or "Talks":
 
 ```html
 <section id="teaching-section">
-  <h2 class="font-heading text-3xl mt-8 mb-4 pb-2
-             border-b border-edge dark:border-edge-dark">Teaching</h2>
+  <h2>Teaching</h2>
   <div id="teaching-content"></div>
 </section>
 ```
@@ -205,3 +204,36 @@ The site deploys automatically via GitHub Pages on every push to `main`.
 `CNAME` points GitHub Pages to `tanayrs.com`.
 
 To update the site: edit a content file, commit, and push. Done.
+
+---
+
+## Styling
+
+All styling is vanilla CSS in `assets/style.css`. No Tailwind, no build step.
+
+### Design system
+
+CSS variables are defined in `:root` and overridden in `html.dark`:
+
+| Token group | Variables |
+|---|---|
+| Backgrounds | `--bg-primary`, `--bg-secondary`, `--card-bg` |
+| Text | `--text-primary`, `--text-secondary`, `--text-muted` |
+| Accent | `--accent`, `--accent-hover`, `--accent-dim` |
+| Borders | `--border-subtle`, `--border-medium` |
+| Fonts | `--font-sans` (Inter), `--font-serif` (Merriweather) |
+| Type scale | `--text-xs` → `--text-3xl` |
+| Spacing scale | `--space-xs` → `--space-3xl` |
+| Shadows | `--shadow-sm`, `--shadow-md`, `--shadow-lg` |
+
+### Dark mode
+
+Toggled by adding/removing the `dark` class on `<html>`. State is persisted to `localStorage` under the key `"theme"`. An anti-flash inline script in each `<head>` applies the class before first paint to prevent flicker.
+
+### Project detail page layout
+
+The project template (`projects/project-template.html`) uses a two-part layout:
+- `.proj-topbar` — sticky top bar containing the back link and theme toggle
+- `main.project-detail` — centred content area with `.proj-title` (h1) and `.project-body` (rendered Markdown)
+
+The title and navigation controls are in separate elements and never share a flex/grid container.

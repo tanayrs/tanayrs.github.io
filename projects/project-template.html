@@ -11,78 +11,37 @@
     if (t === 'dark') document.documentElement.classList.add('dark');
   </script>
 
-  <!-- Tailwind Play CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Tailwind config (runs after CDN so `tailwind` global exists) -->
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            page:   { DEFAULT: '#d5e5f7', dark: '#2c3e50' },
-            ink:    { DEFAULT: '#2c3e50', dark: '#ecf0f1' },
-            accent: { DEFAULT: '#3498db' },
-            edge:   { DEFAULT: '#d0dce7', dark: '#3b5266' },
-          },
-          fontFamily: {
-            heading: ['Merriweather', 'serif'],
-            body:    ['Inter', 'sans-serif'],
-          },
-          maxWidth: { content: '800px' },
-        },
-      },
-    }
-  </script>
-
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Custom CSS overrides -->
   <link rel="stylesheet" href="../assets/style.css">
 </head>
+<body>
 
-<body class="font-body bg-page dark:bg-page-dark text-ink dark:text-ink-dark
-             transition-colors duration-300 leading-relaxed m-0 p-0">
-
-  <div class="max-w-content mx-auto px-8 pt-8 pb-8">
-
-    <!-- Project Header (not fixed) -->
-    <header class="flex items-center gap-4 mb-8">
-      <a href="../index.html"
-         aria-label="Back to home"
-         class="flex-shrink-0 flex items-center gap-1 text-accent font-medium text-sm
-                no-underline hover:underline transition-colors duration-200 whitespace-nowrap">
-        ← Back
-      </a>
-      <h1 id="project-title"
-          class="font-heading text-[1.8rem] leading-snug m-0 flex-1
-                 break-words
-                 max-md:text-2xl max-[480px]:text-xl">
-        Loading...
-      </h1>
-      <!-- Theme toggle -->
-      <div class="theme-toggle-wrap flex-shrink-0">
-        <span class="toggle-icon">☀</span>
-        <label class="toggle-label" for="theme-switch">
-          <input type="checkbox" id="theme-switch" class="hidden" />
-          <div class="slider"></div>
-        </label>
-        <span class="toggle-icon">☾</span>
-      </div>
-    </header>
-
-    <!-- Project Content -->
-    <div id="project-content" class="project-body">
-      <p class="opacity-50">Loading project details...</p>
+  <!-- Sticky top bar: back link + theme toggle -->
+  <div class="proj-topbar">
+    <a href="../index.html" class="back-link">&#8592; Back</a>
+    <div class="theme-toggle-wrap">
+      <span class="toggle-icon">&#9728;</span>
+      <label class="toggle-label" for="theme-switch">
+        <input type="checkbox" id="theme-switch" class="hidden" />
+        <div class="slider"></div>
+      </label>
+      <span class="toggle-icon">&#9790;</span>
     </div>
-
   </div>
 
-  <!-- marked loaded locally -->
+  <!-- Project content -->
+  <main class="project-detail">
+    <h1 id="project-title" class="proj-title">Loading&hellip;</h1>
+    <hr class="proj-divider" />
+    <div id="project-content" class="project-body">
+      <p class="proj-loading">Loading project details&hellip;</p>
+    </div>
+  </main>
+
   <script src="../assets/marked.min.js"></script>
   <script src="../assets/project.js"></script>
 </body>
