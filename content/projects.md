@@ -42,3 +42,7 @@
 **Bi-Steer Cycle** <br>
 <a href="https://github.com/tanayrs/BiSteerCycle">Read More</a>
 </project>
+
+<project>
+**The p-Median Facility Allocation Problem** <br>
+<a href="https://github.com/PjrCodes/pmedian_opt/tree/main">Read More</a>
