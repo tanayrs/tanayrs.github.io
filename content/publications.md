@@ -4,4 +4,6 @@ Nanda, T.R., Shukla, A., Srinivasa, T.R., Bhargava, J., Chauhan, S. (2025). **Ad
 T. R. Srinivasa and S. Kumar, "**Solving Infinite-Horizon Optimal Control Problems using the Extreme Theory of Functional Connections**," 2025 Eleventh Indian Control Conference (ICC), Bangalore, India, 2025, pp. 147-152, doi: <a href = "https://doi.org/10.1109/ICC69100.2025.11372426"> 10.1109/ICC69100.2025.11372426. </a>
 <br><br>
 Srinivasa, T. R., Deulkar, V., Bhargava, J., Hajiesmaili, M. & Shenoy, P. **Degradation-Aware Frequency Regulation of a Heterogeneous Battery Fleet via Reinforcement Learning**. <a href="https://arxiv.org/abs/2601.22865">arXiv:2601.22865 (preprint) </a>, 2026. Accepted to Intelligent Systems Conference (IntelliSys) 2026.
+<br><br>
+Srinivasa, T. R., Deulkar, V., Bhatia, A., & Garg, V. **Reinforcement Learning-Based Co-Design and Operation of Chiller and Thermal Energy Storage for Cost-Optimal HVAC Systems**. <a href="https://arxiv.org/abs/2601.22880">arXiv:2601.22880 (preprint) </a>, 2026. Submitted to IntelliSys 26', under review.
 </pub>
