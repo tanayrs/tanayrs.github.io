@@ -4,6 +4,11 @@
 </project>
 
 <project>
+**Trajectory Optimization from Scratch** <br>
+<a href="https://github.com/tanayrs/TrajectoryOptimization">Read More</a>
+</project>
+
+<project>
 **Co-Design of Cost-Optimal HVAC Systems via Reinforcement Learning** <br> 
 <a href="https://arxiv.org/pdf/2601.22865">Read More</a>
 </project>
