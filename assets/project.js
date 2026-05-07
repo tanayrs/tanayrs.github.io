@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
         `Tanay Raghunandan Srinivasa — ${title}`;
       document.getElementById('project-title').textContent = title;
       document.getElementById('project-content').innerHTML = marked.parse(body);
+
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise([document.getElementById('project-content')])
+          .catch(err => console.error('MathJax typeset failed:', err));
+      }
     })
     .catch(err => {
       document.getElementById('project-content').innerHTML =
