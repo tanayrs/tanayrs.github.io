@@ -1,44 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
   marked.use({ breaks: true, gfm: true });
 
-  // Math extensions: keep $$...$$ and $...$ atomic so marked doesn't
-  // touch the LaTeX (backslash escapes, underscores, asterisks).
-  // MathJax then typesets the raw TeX after we set innerHTML.
-  marked.use({
-    extensions: [
-      {
-        name: 'mathBlock',
-        level: 'block',
-        start(src) {
-          const i = src.indexOf('$$');
-          return i === -1 ? undefined : i;
-        },
-        tokenizer(src) {
-          const m = /^\$\$([\s\S]+?)\$\$/.exec(src);
-          if (m) return { type: 'mathBlock', raw: m[0], text: m[1] };
-        },
-        renderer(token) {
-          return `<p>$$${token.text}$$</p>\n`;
-        }
-      },
-      {
-        name: 'mathInline',
-        level: 'inline',
-        start(src) {
-          const i = src.indexOf('$');
-          return i === -1 ? undefined : i;
-        },
-        tokenizer(src) {
-          const m = /^\$([^\n$]+?)\$/.exec(src);
-          if (m) return { type: 'mathInline', raw: m[0], text: m[1] };
-        },
-        renderer(token) {
-          return `$${token.text}$`;
-        }
-      }
-    ]
-  });
-
   // ── Theme toggle ─────────────────────────────────────────────
   const themeSwitch = document.getElementById('theme-switch');
   themeSwitch.checked = document.documentElement.classList.contains('dark');
@@ -77,19 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
         `Tanay Raghunandan Srinivasa — ${title}`;
       document.getElementById('project-title').textContent = title;
       document.getElementById('project-content').innerHTML = marked.parse(body);
-
-      // Poll until MathJax's async script has finished loading, then typeset.
-      // typesetPromise only exists once the module is fully loaded.
-      const typeset = () => {
-        if (window.MathJax && window.MathJax.typesetPromise) {
-          window.MathJax.typesetPromise(
-            [document.getElementById('project-content')]
-          ).catch(err => console.error('MathJax typeset failed:', err));
-        } else {
-          setTimeout(typeset, 50);
-        }
-      };
-      typeset();
     })
     .catch(err => {
       document.getElementById('project-content').innerHTML =
