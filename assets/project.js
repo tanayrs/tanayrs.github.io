@@ -38,7 +38,27 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('page-title').textContent =
         `Tanay Raghunandan Srinivasa — ${title}`;
       document.getElementById('project-title').textContent = title;
-      document.getElementById('project-content').innerHTML = marked.parse(body);
+
+      // Protect math blocks from marked: extract them into placeholders
+      // before parsing, then re-inject so MathJax sees the original TeX.
+      const mathBlocks = [];
+      const protect = body
+        .replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) => {
+          mathBlocks.push({ display: true, tex });
+          return `@@MATHBLOCK${mathBlocks.length - 1}@@`;
+        })
+        .replace(/\$([^\n$]+?)\$/g, (_, tex) => {
+          mathBlocks.push({ display: false, tex });
+          return `@@MATHBLOCK${mathBlocks.length - 1}@@`;
+        });
+
+      let html = marked.parse(protect);
+      html = html.replace(/@@MATHBLOCK(\d+)@@/g, (_, i) => {
+        const { display, tex } = mathBlocks[+i];
+        return display ? `$$${tex}$$` : `$${tex}$`;
+      });
+
+      document.getElementById('project-content').innerHTML = html;
 
       if (window.MathJax && window.MathJax.typesetPromise) {
         window.MathJax.typesetPromise([document.getElementById('project-content')])
