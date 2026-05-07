@@ -1,6 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
   marked.use({ breaks: true, gfm: true });
 
+  // Math extensions: keep $$...$$ and $...$ atomic so marked doesn't
+  // touch the LaTeX (backslash escapes, underscores, asterisks).
+  // MathJax then typesets the raw TeX after we set innerHTML.
+  marked.use({
+    extensions: [
+      {
+        name: 'mathBlock',
+        level: 'block',
+        start(src) {
+          const i = src.indexOf('$$');
+          return i === -1 ? undefined : i;
+        },
+        tokenizer(src) {
+          const m = /^\$\$([\s\S]+?)\$\$/.exec(src);
+          if (m) return { type: 'mathBlock', raw: m[0], text: m[1] };
+        },
+        renderer(token) {
+          return `<p>$$${token.text}$$</p>\n`;
+        }
+      },
+      {
+        name: 'mathInline',
+        level: 'inline',
+        start(src) {
+          const i = src.indexOf('$');
+          return i === -1 ? undefined : i;
+        },
+        tokenizer(src) {
+          const m = /^\$([^\n$]+?)\$/.exec(src);
+          if (m) return { type: 'mathInline', raw: m[0], text: m[1] };
+        },
+        renderer(token) {
+          return `$${token.text}$`;
+        }
+      }
+    ]
+  });
+
   // ── Theme toggle ─────────────────────────────────────────────
   const themeSwitch = document.getElementById('theme-switch');
   themeSwitch.checked = document.documentElement.classList.contains('dark');
@@ -38,31 +76,16 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('page-title').textContent =
         `Tanay Raghunandan Srinivasa — ${title}`;
       document.getElementById('project-title').textContent = title;
+      document.getElementById('project-content').innerHTML = marked.parse(body);
 
-      // Protect math blocks from marked: extract them into placeholders
-      // before parsing, then re-inject so MathJax sees the original TeX.
-      const mathBlocks = [];
-      const protect = body
-        .replace(/\$\$([\s\S]+?)\$\$/g, (_, tex) => {
-          mathBlocks.push({ display: true, tex });
-          return `@@MATHBLOCK${mathBlocks.length - 1}@@`;
-        })
-        .replace(/\$([^\n$]+?)\$/g, (_, tex) => {
-          mathBlocks.push({ display: false, tex });
-          return `@@MATHBLOCK${mathBlocks.length - 1}@@`;
-        });
+      const typeset = () => window.MathJax.typesetPromise(
+        [document.getElementById('project-content')]
+      ).catch(err => console.error('MathJax typeset failed:', err));
 
-      let html = marked.parse(protect);
-      html = html.replace(/@@MATHBLOCK(\d+)@@/g, (_, i) => {
-        const { display, tex } = mathBlocks[+i];
-        return display ? `$$${tex}$$` : `$${tex}$`;
-      });
-
-      document.getElementById('project-content').innerHTML = html;
-
-      if (window.MathJax && window.MathJax.typesetPromise) {
-        window.MathJax.typesetPromise([document.getElementById('project-content')])
-          .catch(err => console.error('MathJax typeset failed:', err));
+      if (window.MathJax && window.MathJax.startup) {
+        window.MathJax.startup.promise.then(typeset);
+      } else if (window.MathJax && window.MathJax.typesetPromise) {
+        typeset();
       }
     })
     .catch(err => {
