@@ -78,15 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('project-title').textContent = title;
       document.getElementById('project-content').innerHTML = marked.parse(body);
 
-      const typeset = () => window.MathJax.typesetPromise(
-        [document.getElementById('project-content')]
-      ).catch(err => console.error('MathJax typeset failed:', err));
-
-      if (window.MathJax && window.MathJax.startup) {
-        window.MathJax.startup.promise.then(typeset);
-      } else if (window.MathJax && window.MathJax.typesetPromise) {
-        typeset();
-      }
+      // Poll until MathJax's async script has finished loading, then typeset.
+      // typesetPromise only exists once the module is fully loaded.
+      const typeset = () => {
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          window.MathJax.typesetPromise(
+            [document.getElementById('project-content')]
+          ).catch(err => console.error('MathJax typeset failed:', err));
+        } else {
+          setTimeout(typeset, 50);
+        }
+      };
+      typeset();
     })
     .catch(err => {
       document.getElementById('project-content').innerHTML =
