@@ -12,11 +12,11 @@ This project asks whether **physics-informed neural networks (PINNs)** can solve
 
 Bellman's principle of optimality says that any tail of an optimal trajectory is itself optimal. Applied over an infinitesimal step and Taylor-expanded, this collapses to the HJB equation:
 
-$$-\frac{\partial V}{\partial t}(x, t) = \min_{u \in \mathcal{U}} \left[ \mathcal{L}(x, u, t) + \frac{\partial V}{\partial x}(x, t)\, f(x, u, t) \right]$$
+`-∂V/∂t (x, t) = min_u [ L(x, u, t) + (∂V/∂x)(x, t) · f(x, u, t) ]`
 
 with a terminal boundary condition `V(x, t_f) = φ(x)`. For an LQR-style running cost `ℓ = xᵀQx + uᵀRu`, the inner minimisation has a closed form, and the optimal feedback policy is recovered as
 
-$$u^*(x, t) = -\tfrac{1}{2} R^{-1} \left(\frac{\partial f}{\partial u}\right)^{\!\top} \left(\frac{\partial V}{\partial x}\right)^{\!\top}.$$
+`u*(x, t) = -½ R⁻¹ (∂f/∂u)ᵀ (∂V/∂x)ᵀ`
 
 Solve for `V` once and you have a controller for every state.
 
@@ -43,11 +43,11 @@ The framework was developed against a ladder of OCP formulations, each one close
 
 The flagship test is a full nonlinear rigid-body slew with quaternion kinematics and Euler dynamics:
 
-$$\dot{q} = \tfrac{1}{2}\Omega(\omega)\,q, \qquad J\dot{\omega} + \omega \times (J\omega) = u, \qquad \|u\|_\infty \leq u_{\max}.$$
+`q̇ = ½ Ω(ω) q,    J ω̇ + ω × (J ω) = u,    ‖u‖_∞ ≤ u_max`
 
 The state is seven-dimensional — well past where grid-based HJB solvers are usable. The cost is time–energy:
 
-$$\ell(x, u) = \alpha + q^\top Q_q\, q + \omega^\top Q_\omega\, \omega + u^\top R_u\, u,$$
+`ℓ(x, u) = α + qᵀ Q_q q + ωᵀ Q_ω ω + uᵀ R_u u`
 
 with `α` setting the time-vs-effort trade-off and the quadratic terms penalising attitude error, body rate, and control effort.
 
