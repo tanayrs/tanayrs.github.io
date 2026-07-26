@@ -1,5 +1,5 @@
 <exp>
-**Project Trainee |** U R Rao Satellite Center, ISRO (Jan 2026 - Present)
+**Project Trainee |** U R Rao Satellite Center, ISRO (Jan 2026 - May 2026)
 </exp>
 
 <exp>
