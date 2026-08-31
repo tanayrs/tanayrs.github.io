@@ -1,24 +1,46 @@
-# Neural Networks for Optimal Control: A Physics-Informed Approach
+# Neural Networks for Optimal Control
 
 ## Background
 
-A range of aerospace problems share the same skeleton: pick a control history that minimises a cost subject to dynamics. Lowering a spacecraft onto Mars while burning the least fuel, slewing a satellite to point at a target as quickly as possible, and steering an interceptor — all of these are *optimal control problems* (OCPs).
+Many control problems in aerospace are posed with a constraint that an objective (Eg. Control Effort, Time, State-Error) needs to be minimized. For example: Lowering a satellite on an extra-terrestrial planet while using minimum fuel; Re-Orienting of a satellite in minimum time. That is, the controller must manipulate the spacecraft such that it goes from an initial state to a terminal state, while obeying system dynamics and constraints (like maximum thrust). Such problems are called "Optimal Control Problems."
 
-The classical recipes split into two camps. **Trajectory optimisation** discretises the trajectory and hands the resulting nonlinear program to a solver like IPOPT or `fmincon`. It works, but it returns a single trajectory for a single initial condition; perturb the start state and you re-solve from scratch. **Dynamic programming** instead seeks the *value function* `V(x, t)` — the optimal cost-to-go from any state at any time — by solving the Hamilton–Jacobi–Bellman (HJB) partial differential equation. From `V` an analytical feedback law falls out, valid everywhere. The catch is the curse of dimensionality: a grid solver scales as `N^d`, and `d = 7` for spacecraft attitude control already puts a coarse `N = 20` grid past a billion cells.
+In current literature, these problems are solved one of the following ways: **"Trajectory Optimization"**, **"Calculus of Variations"** or **"Dynamic Programming"**.
 
-This project asks whether **physics-informed neural networks (PINNs)** can solve the HJB equation directly in high dimensions, giving us the global, real-time feedback policy that classical PDE solvers cannot.
+While these systems operate in continuous time with continuous dynamics, Trajectory Optimization discretizes the Trajectory of the system into a finite number of points, uses a constrained nonlinear program solver like `fmincon` or IPOPT to find the optimal control trajectory. While this approach is widely-used either directly or within the Model Predictive Control Framework, it is computationally intesive during deployment. As a result, either lower-order system models are used, or a larger compute needs to be made available.
+
+Instead of discretizing the trajectory, we can attempt to find an optimal controller as an analytical and continuous function of time, by solving the non-linear partial differential equations arising from the Pontryagin Maximization Principle (PMP). While this approach seems attractive, finding the controller is not always practically tractable.
+
+Dynamic Programming, in general, is thought of as Discrete Dynamic Programming, where states and time is thought of as discrete points. Here, the Bellman Equation is used to find the Value Function. In our case, we would like a continuous Value Function. To obtain this, we need to solve the **'Hamilton-Jacobi-Bellman (HJB)'** Partial Differential Equation (PDE). In particular, we use Neural Networks to approximate the solution to the HJB-PDE.
+
+Overall, a Optimal Control Problem is posed as follows:
+
+`min_u J = min_u φ(x_f) + \int_{0}^{t_f} L(x,u,t)`
+
+  subject to, `\dot{x} = f(x,u,t)`, `x(t=0) = x_0`, `x(t=t_f) = x_f`
+
+where 
+      - `x` is the state, 
+      - `u` is the control input,
+      - `t` is time, 
+      - `x_f` is the terminal state, 
+      - `t_f` is the terminal time 
+      - `φ(x)` is the terminal cost, 
+      - `L` is the running cost, and 
+      - `J` is the total cost to go from the initial state to the terminal state.
 
 ## The HJB Equation
 
-Bellman's principle of optimality says that any tail of an optimal trajectory is itself optimal. Applied over an infinitesimal step and Taylor-expanded, this collapses to the HJB equation:
+Bellman's principle of optimality says that any slice of an optimal trajectory is also optimal. Applied over an infinitesimal step and expanded using the first order Taylor-Expansion, the Bellman Equation is transformed into to the HJB equation:
 
 `-∂V/∂t (x, t) = min_u [ L(x, u, t) + (∂V/∂x)(x, t) · f(x, u, t) ]`
 
-with a terminal boundary condition `V(x, t_f) = φ(x)`. For an LQR-style running cost `ℓ = xᵀQx + uᵀRu`, the inner minimisation has a closed form, and the optimal feedback policy is recovered as
+with a terminal boundary condition `V(x, t_f) = φ(x)`.
+
+To remove the `min_u [ ]`, we find the analytical relationship between the optimal control policy `u*` and the value function. For example, an LQR-style running cost `ℓ = xᵀQx + uᵀRu` gives the relation: 
 
 `u*(x, t) = -½ R⁻¹ (∂f/∂u)ᵀ (∂V/∂x)ᵀ`
 
-Solve for `V` once and you have a controller for every state.
+By replacing the optimal feedback policy in the HJB, we get a non-linear partial differential equation, which when solved gives us the value function `V` and consequently the optimal control policy `u*(x,t)`. It is important to note that now `u*(x,t)` is not specific to a particular trajectory, but can be queried anywhere in the problems state-space. This allows us to train the policy offline where compute is not a constraint, and query the neural network online making the technique relatively computationally inexpensive.
 
 ## Why PINNs
 
