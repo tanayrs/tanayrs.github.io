@@ -2,4 +2,6 @@
 Nanda, T.R., Shukla, A., Srinivasa, T.R., Bhargava, J., Chauhan, S. (2025). **Advancing Real-Time Crop Disease Detection on Edge Computing Devices Using Lightweight Convolutional Neural Networks**. In: Arai, K. (eds) Intelligent Systems and Applications. IntelliSys 2025. Lecture Notes in Networks and Systems, vol 1567. Springer, Cham. <a href="https://doi.org/10.1007/978-3-032-00071-2_33"> https://doi.org/10.1007/978-3-032-00071-2_33 </a>.
 <br>
 T. R. Srinivasa and S. Kumar, "**Solving Infinite-Horizon Optimal Control Problems using the Extreme Theory of Functional Connections**," 2025 Eleventh Indian Control Conference (ICC), Bangalore, India, 2025, pp. 147-152, doi: <a href = "https://doi.org/10.1109/ICC69100.2025.11372426"> 10.1109/ICC69100.2025.11372426. </a>
+<br>
+S. Kumar and T. R. Srinivasa, "**HJB Optimal Feedback Guidance for Spacecraft Attitude Manuever via Physics-Informed Neural Networks**," AIAA SciTech Forum 2027, Orlando, Florida (Accepted Aug 31, 2026) </a>
 </pub>
